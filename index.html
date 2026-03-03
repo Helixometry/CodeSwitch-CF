@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>CS-CodecFake: Code-Switched CodecFake Detection (Interspeech 2026)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --link:#2563eb;
+      --border:#e5e7eb;
+      --panel:#f9fafb;
+    }
+    html,body{
+      margin:0; padding:0; background:var(--bg); color:var(--text);
+      font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
+    }
+    .wrap{max-width:1040px; margin:0 auto; padding:28px 18px 56px;}
+    h1{font-size:28px; line-height:1.25; margin:0 0 10px; text-align:center;}
+    .conf{ text-align:center; font-style:italic; color:var(--muted); margin:6px 0 14px; }
+    h2{ font-size:20px; margin:26px 0 10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+    p{ margin:10px 0; }
+    .tldr{ margin:0 0 18px; }
+    .note{ color:var(--muted); }
+    code{ background:#f3f4f6; padding:2px 6px; border-radius:6px; }
+
+    .tablewrap{
+      overflow:auto;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:#fff;
+    }
+    table{
+      border-collapse:collapse;
+      width:100%;
+      min-width:1050px; /* ensures audio columns keep space */
+      table-layout:fixed; /* makes column widths predictable */
+    }
+    th, td{
+      border-bottom:1px solid var(--border);
+      padding:12px 10px;
+      text-align:left;
+      vertical-align:middle;
+    }
+    th{ background:var(--panel); font-weight:600; }
+
+    /* Column sizing so File ID doesn't crush audio columns */
+    th.codec, td.codec{ width:220px; }
+    th.fileid, td.fileid{
+      width:360px;
+      white-space:normal;
+      overflow-wrap:anywhere; /* wrap long IDs */
+      word-break:break-word;
+    }
+    th.audio, td.audio{ width:235px; }
+
+    /* Bigger, always-visible audio controls */
+    .audio-pill{
+      display:inline-flex;
+      align-items:center;
+      padding:8px 10px;
+      border-radius:14px;     /* not a circle */
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      min-width:220px;        /* prevents collapsing */
+    }
+    .audio-pill audio{
+      width:210px;
+      min-width:210px;
+      height:40px;            /* makes controls larger */
+      flex:0 0 auto;          /* don't shrink */
+    }
+
+    .small{ font-size:13px; color:var(--muted); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>CS-CodecFake Benchmark: Code-Switched CodecFake Detection</h1>
+    <div class="conf">Anonymous submission to Interspeech 2026</div>
+
+    <p class="tldr">
+      <b>TL;DR:</b> Paired <b>real (GT)</b> and <b>codec-resynthesized (fake)</b> samples for code-switched English–Mandarin speech.
+    </p>
+
+    <h2>Sample gallery</h2>
+    <p class="note">
+      Keep audio paths <b>relative</b> to <code>index.html</code>.
+    </p>
+
+    <div class="tablewrap">
+      <table aria-label="CSCF samples">
+        <thead>
+          <tr>
+            <th class="codec">Codec</th>
+            <th class="fileid">File ID</th>
+            <th class="audio">Real (GT)</th>
+            <th class="audio">Fake (Codec)</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr><td colspan="4" class="small">Loading samples…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="small" style="margin-top:14px;">© Your lab / authors</p>
+  </div>
+
+  <script>
+    window.MANIFEST_RAW = [
+      {
+        gt_id: "00156__ses1_spk12_L2504_366.0230_1.2400",
+        codec: "hubertsiuzdak_snac_24khz",
+        gt_url: "Real/00156__ses1_spk12_L2504_366.0230_1.2400.wav",
+        gen_url: "Fake/00156__ses1_spk12_L2504_366.0230_1.2400_hubertsiuzdak_snac_24khz.wav"
+      },
+      {
+        gt_id: "00338__ses1_spk20_L4878_520.3640_3.1000",
+        codec: "hubertsiuzdak_snac_32khz",
+        gt_url: "Real/00338__ses1_spk20_L4878_520.3640_3.1000.wav",
+        gen_url: "Fake/00338__ses1_spk20_L4878_520.3640_3.1000_hubertsiuzdak_snac_32khz.wav"
+      },
+      {
+        gt_id: "00364__ses1_spk7_L7386_117.7950_2.8700",
+        codec: "hubertsiuzdak_snac_44khz",
+        gt_url: "Real/00364__ses1_spk7_L7386_117.7950_2.8700.wav",
+        gen_url: "Fake/00364__ses1_spk7_L7386_117.7950_2.8700_hubertsiuzdak_snac_44khz.wav"
+      },
+      {
+        gt_id: "00413__ses1_spk7_L7652_615.9050_3.3000",
+        codec: "descript_dac_16khz",
+        gt_url: "Real/00413__ses1_spk7_L7652_615.9050_3.3000.wav",
+        gen_url: "Fake/00413__ses1_spk7_L7652_615.9050_3.3000_descript_dac_16khz.wav"
+      },
+      {
+        gt_id: "00435__ses2_spk12_L9066_262.2900_2.7400",
+        codec: "descript_dac_24khz",
+        gt_url: "Real/00435__ses2_spk12_L9066_262.2900_2.7400.wav",
+        gen_url: "Fake/00435__ses2_spk12_L9066_262.2900_2.7400_descript_dac_24khz.wav"
+      },
+      {
+        gt_id: "00486__ses2_spk12_L9174_431.0300_2.4800",
+        codec: "descript_dac_44khz",
+        gt_url: "Real/00486__ses2_spk12_L9174_431.0300_2.4800.wav",
+        gen_url: "Fake/00486__ses2_spk12_L9174_431.0300_2.4800_descript_dac_44khz.wav"
+      },
+      {
+        gt_id: "00510__ses2_spk12_L9242_535.0900_0.4400",
+        codec: "facebook_encodec_24khz",
+        gt_url: "Real/00510__ses2_spk12_L9242_535.0900_0.4400.wav",
+        gen_url: "Fake/00510__ses2_spk12_L9242_535.0900_0.4400_facebook_encodec_24khz.wav"
+      },
+      {
+        gt_id: "00668__ses2_spk7_L14015_215.8650_1.6700",
+        codec: "facebook_encodec_48khz",
+        gt_url: "Real/00668__ses2_spk7_L14015_215.8650_1.6700.wav",
+        gen_url: "Fake/00668__ses2_spk7_L14015_215.8650_1.6700_facebook_encodec_48khz.wav"
+      },
+      {
+        gt_id: "00761__ses3_spk12_L15132_701.0200_0.8200",
+        codec: "SoundStream_soundstream_16khz",
+        gt_url: "Real/00761__ses3_spk12_L15132_701.0200_0.8200.wav",
+        gen_url: "Fake/00761__ses3_spk12_L15132_701.0200_0.8200_SoundStream_soundstream_16khz.wav"
+      },
+      {
+        gt_id: "00827__ses3_spk20_L17356_283.1980_4.0000",
+        codec: "SpeechTokenizer",
+        gt_url: "Real/00827__ses3_spk20_L17356_283.1980_4.0000.wav",
+        gen_url: "Fake/00827__ses3_spk20_L17356_283.1980_4.0000_SpeechTokenizer.wav"
+      }
+    ];
+  </script>
+
+  <script>
+    function audioCell(src){
+      const td = document.createElement("td");
+      td.className = "audio";
+      if(!src){
+        td.textContent = "—";
+        td.classList.add("small");
+        return td;
+      }
+      const wrap = document.createElement("div");
+      wrap.className = "audio-pill";
+
+      const a = document.createElement("audio");
+      a.controls = true;
+      a.preload = "none";
+      a.src = src;
+
+      wrap.appendChild(a);
+      td.appendChild(wrap);
+      return td;
+    }
+
+    function textCell(txt, cls){
+      const td = document.createElement("td");
+      if(cls) td.className = cls;
+      td.textContent = txt ?? "";
+      return td;
+    }
+
+    function loadFromManifest(){
+      const tbody = document.getElementById("tbody");
+
+      if(!Array.isArray(window.MANIFEST_RAW)){
+        tbody.innerHTML = `
+          <tr><td colspan="4" class="small">
+            <b>Manifest not found.</b><br/>
+            Expected <code>window.MANIFEST_RAW = [...]</code>.
+          </td></tr>`;
+        return;
+      }
+
+      const rows = window.MANIFEST_RAW;
+      tbody.innerHTML = "";
+
+      if(rows.length === 0){
+        tbody.innerHTML = `<tr><td colspan="4" class="small">No rows in manifest.</td></tr>`;
+        return;
+      }
+
+      for(const r of rows){
+        const tr = document.createElement("tr");
+        tr.appendChild(textCell(r.codec || "", "codec"));
+        tr.appendChild(textCell(r.gt_id || r.id || "", "fileid"));
+        tr.appendChild(audioCell(r.gt_url));
+        tr.appendChild(audioCell(r.gen_url));
+        tbody.appendChild(tr);
+      }
+    }
+
+    loadFromManifest();
+  </script>
+</body>
+</html>
